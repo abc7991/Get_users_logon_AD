@@ -19,7 +19,7 @@ if ("$checkdsaPath" -eq "False"){
 $Currentfolder = Split-Path $script:MyInvocation.MyCommand.Path;
 $password = "Password@123" | ConvertTo-SecureString -asPlainText -Force;    #update password domain admin
 $username = "a.nguyenvan@abc.com"                                           #update username domain admin
-$ou = "ou=computer,ou=vn,dc=abc,dc=com"                                     #Update OU
+$ou = (Get-ADOrganizationalUnit -Identity $(($adComputer = Get-ADComputer -Identity $env:COMPUTERNAME).DistinguishedName.SubString($adComputer.DistinguishedName.IndexOf("OU=")))).DistinguishedName;
 $cred = New-object System.Management.Automation.PSCredential($username,$password)
 $hostcomputer = $env:COMPUTERNAME;
 #get pc onl in AD
